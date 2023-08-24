@@ -97,6 +97,19 @@
     </select>
     {{$errors->first('active')}}
 </div>
+
+<div class="mb-3 mt-3">
+  <label for="companyid" class="col-sm-2">Company Name: </label>
+  <div class="col-sm-10">
+  <select name="companyid" id="companyid">
+      <option value="" disabled> Select Company ID </option>
+      @foreach($companies as $company)
+          <option value="{{$company->id}}"> {{$company->cpyname}} </option>
+      @endforeach
+  </select>
+  </div>
+</div>
+
   <div class="mb-3"> 
     <button type="submit" class="btn btn-primary">Submit</button>
   </div>
@@ -112,7 +125,7 @@
         <h3> Active Customer list </h3>
     <ul>
         @foreach ($activeCustomers as $customer) 
-              <li> {{$customer -> name }} ----- <span class="text-muted"> {{ $customer-> age }} -- {{ $customer->address}} -- -- {{$customer->contactno}} -- {{ $customer->email }}</span> </li>
+              <li> {{$customer -> name }} ----- <span class="text-muted"> {{ $customer-> age }} -- {{ $customer->address}} -- -- {{$customer->contactno}} -- {{ $customer->email }} -- {{ $customer->active  }}</span> </li>
        @endforeach
     </ul>
     </div>
@@ -120,7 +133,7 @@
     <h3> Inactive Customer List  </h3>
     <ul>
         @foreach($inactiveCustomers as $customer)
-            <li> {{$customer -> name }} ----- <span class="text-muted"> {{ $customer-> age }} -- {{ $customer->address}} -- -- {{$customer->contactno}} -- {{ $customer->email }}</span> </li>
+            <li> {{$customer -> name }} ----- <span class="text-muted"> {{ $customer-> age }} -- {{ $customer->address}} -- -- {{$customer->contactno}} -- {{ $customer->email }} -- {{ $customer->active  }}</span> </li>
         @endforeach
     </ul>
   </div>

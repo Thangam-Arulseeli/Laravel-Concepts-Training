@@ -25,6 +25,7 @@ return new class extends Migration
             $table->double('contactno',10,0);
             $table->string('email',50);
             $table->integer('active');
+            $table->unsignedBigInteger('companyid');
             $table->timestamps();
         });
     }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\CustomersController;
 use App\Models\Customer;
+use App\Models\Company;
 
 class CustomersController extends Controller
 {
@@ -30,9 +31,10 @@ class CustomersController extends Controller
         // return view ('customers.index', compact('activeCustomers' ,'inactiveCustomers'));
 
         //4. Instead of (3) Filtering the records - Refactoring the code using Customer Model
-     $activeCustomers = Customer::active()->get();  // Search & Calls SCOPE - active() in Customer model
+     $companies = Company::all();
+        $activeCustomers = Customer::active()->get();  // Search & Calls SCOPE - active() in Customer model
      $inactiveCustomers = Customer::inactive()->get();  // Search & Calls SCOPE - inactive() in Customer model
-     return view ('customers.index', compact('activeCustomers' ,'inactiveCustomers'));
+     return view ('customers.index', compact('activeCustomers' ,'inactiveCustomers','companies'));
     }
 
     public function store()
@@ -43,22 +45,26 @@ class CustomersController extends Controller
         $data = request()->validate([   // Method chaining
             'name' => 'required|min:5|max:10',
             'age' => 'required',
-            // 'address' => 'required',
+             'address' => 'nullable',
             'contactno' => 'required',
             'email' => 'required|email',
-            'active' => 'required'
+            'active' => 'required',
+            'companyid' => 'required'
           ]);
 
      // 1. Inserting the data into the table - No validation 
-      $cust = new Customer();     // instance for Customer model is created
-      $cust->name = request('name');
-      $cust->age = request('age');
-      $cust->address = request('address');
-      $cust->contactno = request('contactno');
-      $cust->email = request('email');
-      $cust->active = request('active');
-      $cust->save();
+      // $cust = new Customer();     // instance for Customer model is created
+      // $cust->name = request('name');
+      // $cust->age = request('age');
+      // $cust->address = request('address');
+      // $cust->contactno = request('contactno');
+      // $cust->email = request('email');
+      // $cust->active = request('active');
+      // $cust->save();
 
+      // dd($data);
+        $customer= Customer::create($data);  // Should combine with Mass assignment- fillable(), to have only the validated data into the DB
+       // $customer->save();  // -- No need for mass assignment
         return back();
 
     } 
